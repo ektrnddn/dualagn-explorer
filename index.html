@@ -17,9 +17,69 @@
   --accent: #8F1D28;
   --accent-soft: rgba(196, 56, 66, 0.08);
   --blue: #0a53c9;
+  --card-hover: #fbfaf8;
+  --border-hover: #b9b6af;
+  --row-hover: #f7f6f3;
+  --td-border: #efedea;
+  --tip-bg: rgba(255, 255, 255, 0.97);
+  --tip-border: #c9c6c0;
+  --link-bg: #f3f7fe;
+  --link-border: #c7d7f2;
+  --link-bg-hover: #e8f0fd;
+  --kbd-bg: #f4f3f0;
+  --ang-chip: #5A5A5A;
+  --shadow: 0 1px 2px rgba(30, 25, 20, 0.05);
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --serif: Georgia, "Times New Roman", serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171c;
+    --card: #1e2127;
+    --ink: #e9e7e3;
+    --ink2: #b6b3ad;
+    --muted: #87847e;
+    --line: #34383f;
+    --accent: #D9727C;
+    --accent-soft: rgba(217, 114, 124, 0.14);
+    --blue: #7fa8ef;
+    --card-hover: #252932;
+    --border-hover: #4a4e57;
+    --row-hover: #262a31;
+    --td-border: #2b2f36;
+    --tip-bg: rgba(32, 35, 42, 0.97);
+    --tip-border: #4a4e57;
+    --link-bg: #1d2a40;
+    --link-border: #33507e;
+    --link-bg-hover: #24334d;
+    --kbd-bg: #262a31;
+    --ang-chip: #9a9a9a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171c;
+  --card: #1e2127;
+  --ink: #e9e7e3;
+  --ink2: #b6b3ad;
+  --muted: #87847e;
+  --line: #34383f;
+  --accent: #D9727C;
+  --accent-soft: rgba(217, 114, 124, 0.14);
+  --blue: #7fa8ef;
+  --card-hover: #252932;
+  --border-hover: #4a4e57;
+  --row-hover: #262a31;
+  --td-border: #2b2f36;
+  --tip-bg: rgba(32, 35, 42, 0.97);
+  --tip-border: #4a4e57;
+  --link-bg: #1d2a40;
+  --link-border: #33507e;
+  --link-bg-hover: #24334d;
+  --kbd-bg: #262a31;
+  --ang-chip: #9a9a9a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -43,12 +103,12 @@ h1 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin: 0; le
   transition: border-color .12s, background .12s, opacity .12s;
   white-space: nowrap;
 }
-.btn:hover { border-color: #b9b6af; background: #fbfaf8; }
+.btn:hover { border-color: var(--border-hover); background: var(--card-hover); }
 .btn:active { transform: translateY(0.5px); }
 .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .btn:focus-visible, .chip:focus-visible, .lg-row:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
 a.btn-paper {
-  background: var(--accent); border-color: var(--accent); color: #fff;
+  background: #8F1D28; border-color: #8F1D28; color: #ffffff;
   font-weight: 650; font-size: 13px; padding: 6px 14px; text-decoration: none;
   display: inline-flex; align-items: center;
 }
@@ -67,13 +127,13 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
   border-radius: 999px; padding: 4px 12px; font-size: 12.5px; cursor: pointer;
   transition: opacity .12s, border-color .12s;
 }
-.chip:hover { border-color: #b9b6af; }
+.chip:hover { border-color: var(--border-hover); }
 .chip.off { opacity: 0.45; border-style: dashed; }
 .chip .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
 .chip .dot.fill { background: rgba(196,56,66,0.35); border: 1px solid var(--accent); }
 .chip .dot.lines { background: transparent; border-bottom: 2.5px solid var(--accent); border-radius: 0; height: 5px; }
-.chip .dot.cloud { background: rgba(143,29,40,0.5); border-radius: 50%; }
-.chip .dot.ang { background: transparent; border-bottom: 1.5px solid #5A5A5A; border-radius: 0; height: 5px; }
+.chip .dot.cloud { background: rgba(196,56,66,0.55); border-radius: 50%; }
+.chip .dot.ang { background: transparent; border-bottom: 1.5px solid var(--ang-chip); border-radius: 0; height: 5px; }
 
 #search {
   border: 1px solid var(--line); border-radius: 7px; padding: 5px 10px; font-size: 12.5px;
@@ -86,7 +146,7 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
   position: relative; flex: 1 1 auto; min-width: 660px;
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
   padding: 8px 6px 0; overflow: hidden;
-  box-shadow: 0 1px 2px rgba(30,25,20,0.05);
+  box-shadow: var(--shadow);
 }
 #fig { display: block; }
 #readout {
@@ -99,14 +159,14 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
   flex: 0 0 262px; display: flex; flex-direction: column;
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
   padding: 10px 10px 8px; max-height: none;
-  box-shadow: 0 1px 2px rgba(30,25,20,0.05);
+  box-shadow: var(--shadow);
 }
 .lg-section { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin: 8px 4px 4px; }
 .lg-section:first-child { margin-top: 0; }
 #lg-desi {
   display: flex; align-items: center; gap: 8px; padding: 5px 6px; border-radius: 7px;
 }
-#lg-desi:hover { background: #f7f6f3; }
+#lg-desi:hover { background: var(--row-hover); }
 .lg-desi-glyph { width: 22px; height: 0; border-top: 3px solid var(--accent); border-radius: 2px; }
 .lg-desi-label { font-weight: 600; font-size: 13px; }
 .lg-sub { display: flex; flex-wrap: wrap; gap: 5px; margin: 3px 4px 2px 8px; }
@@ -119,7 +179,7 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
   padding: 2.5px 6px; border-radius: 7px; cursor: pointer; color: var(--ink);
   font-family: var(--sans); font-size: 12.6px;
 }
-.lg-row:hover { background: #f7f6f3; }
+.lg-row:hover { background: var(--row-hover); }
 .lg-row.off { opacity: 0.32; }
 .lg-row.off .lg-label { text-decoration: line-through; text-decoration-thickness: 1px; }
 .lg-row canvas { flex: 0 0 22px; }
@@ -130,9 +190,9 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
 
 #tooltip {
   position: absolute; display: none; z-index: 30; pointer-events: none;
-  background: rgba(255,255,255,0.97); border: 1px solid #c9c6c0; border-radius: 9px;
-  box-shadow: 0 6px 20px rgba(25,20,15,0.16);
-  padding: 9px 11px 7px; max-width: 340px; font-size: 12.3px;
+  background: var(--tip-bg); border: 1px solid var(--tip-border); border-radius: 9px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 9px 11px 7px; max-width: 340px; font-size: 12.3px; color: var(--ink);
 }
 #tooltip.pinned { pointer-events: auto; border-color: var(--blue); }
 .tt-head { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
@@ -143,15 +203,15 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
 .tt-row { display: flex; gap: 8px; align-items: baseline; padding: 0.5px 0; }
 .tt-k { color: var(--muted); min-width: 64px; font-size: 11.3px; }
 .tt-v { font-weight: 600; font-variant-numeric: tabular-nums; }
-.tt-linekey { width: 15px; border-top: 2.2px solid #000; display: inline-block; transform: translateY(-3px); }
+.tt-linekey { width: 15px; border-top: 2.2px solid var(--ink); display: inline-block; transform: translateY(-3px); }
 .tt-sel { color: var(--ink2); font-size: 11px; margin-top: 4px; max-width: 320px; }
 .tt-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; }
 .tt-link {
   font-size: 11.3px; color: var(--blue); text-decoration: none;
-  border: 1px solid #c7d7f2; background: #f3f7fe; border-radius: 6px; padding: 2px 8px;
+  border: 1px solid var(--link-border); background: var(--link-bg); border-radius: 6px; padding: 2px 8px;
 }
-.tt-link:hover { background: #e8f0fd; }
-.tt-hint { color: #b3b0aa; font-size: 10.3px; margin-top: 5px; }
+.tt-link:hover { background: var(--link-bg-hover); }
+.tt-hint { color: var(--muted); font-size: 10.3px; margin-top: 5px; }
 
 #drawer { display: none; margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 #drawer.open { display: block; }
@@ -162,25 +222,26 @@ a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
   text-align: left; font-weight: 600; font-size: 11.3px; color: var(--ink2);
   border-bottom: 1.5px solid var(--line); padding: 4px 8px; position: sticky; top: 0; background: var(--card);
 }
-.tbl td { border-bottom: 1px solid #efedea; padding: 3px 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl td { border-bottom: 1px solid var(--td-border); padding: 3px 8px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .tbl-name { font-family: var(--mono); font-size: 11.3px; }
-.tbl tr:hover td { background: #faf9f6; }
+.tbl tr:hover td { background: var(--row-hover); }
 
 footer.src { color: var(--muted); font-size: 11.6px; margin-top: 12px; line-height: 1.5; }
 footer.src a { color: var(--ink2); }
 
 dialog#about {
   border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px;
-  max-width: 560px; font-size: 13.3px; color: var(--ink); font-family: var(--sans);
-  box-shadow: 0 18px 50px rgba(25,20,15,0.25);
+  max-width: 560px; font-size: 13.3px; color: var(--ink); background: var(--card); font-family: var(--sans);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
 }
-dialog#about::backdrop { background: rgba(30,26,20,0.35); }
+dialog#about::backdrop { background: rgba(10, 10, 12, 0.45); }
 dialog#about h2 { font-family: var(--serif); margin: 0 0 10px; font-size: 18px; }
 dialog#about p { margin: 7px 0; }
+dialog#about a { color: var(--blue); }
 dialog#about .num { font-weight: 650; font-variant-numeric: tabular-nums; }
 dialog#about .kbd-row { color: var(--ink2); font-size: 12.3px; }
 kbd {
-  font-family: var(--mono); font-size: 11px; background: #f4f3f0; border: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px; background: var(--kbd-bg); border: 1px solid var(--line);
   border-bottom-width: 2px; border-radius: 5px; padding: 0 5px;
 }
 
@@ -198,6 +259,7 @@ kbd {
     <span class="subtitle">interactive companion to the paper figure (dr_z.ipynb)</span>
     <span class="top-spacer"></span>
     <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper&ensp;·&ensp;arXiv:2607.27390</a>
+    <button class="btn" id="btn-theme" type="button" title="Cycle theme: auto → dark → light">theme: auto</button>
     <button class="btn" id="btn-about" type="button">About &amp; keys</button>
     <button class="btn" id="btn-table" type="button" aria-pressed="false">Data table</button>
     <button class="btn" id="btn-csv" type="button">CSV of view</button>
@@ -506,14 +568,96 @@ let renderQueued = false;
 function requestRender() { if (!renderQueued) { renderQueued = true; requestAnimationFrame(() => { renderQueued = false; render(ctx, L, { dpr: window.devicePixelRatio || 1 }); }); } }
 
 const F_SERIF = 'Georgia, "Times New Roman", serif';
-const INK = '#1a1a1a', INK2 = '#444', GRID = 'rgba(120,120,120,0.28)', FRAME = '#2b2b2b';
+
+/* ---------------- themes ----------------
+ * Light is the paper's exact look. Dark re-derives the figure: same catalog hues,
+ * with very dark colors lifted (hue preserved) so they stay visible on the dark ground. */
+const CANVAS_THEMES = {
+  light: {
+    ink: '#1a1a1a', ink2: '#444', grid: 'rgba(120,120,120,0.28)', frame: '#2b2b2b',
+    bg: '#ffffff', ang: '#5A5A5A', cloud: 'rgba(143,29,40,0.55)',
+    halo: 'rgba(255,255,255,0.9)', cross: 'rgba(40,40,40,0.35)',
+    legBox: 'rgba(255,255,255,0.9)', legBorder: '#b9b9b9',
+    histDesi: '#8F1D28', histDesiFill: 'rgba(196,56,66,0.10)', histLit: '#111111',
+  },
+  dark: {
+    ink: '#e9e7e3', ink2: '#b6b3ad', grid: 'rgba(170,170,182,0.20)', frame: '#c9c7c1',
+    bg: '#1e2127', ang: '#8f8f8f', cloud: 'rgba(230,120,132,0.5)',
+    halo: 'rgba(20,22,26,0.9)', cross: 'rgba(222,222,222,0.35)',
+    legBox: 'rgba(30,33,39,0.92)', legBorder: '#4a4e57',
+    histDesi: '#E07986', histDesiFill: 'rgba(224,121,134,0.13)', histLit: '#E9E7E3',
+  },
+};
+const KDE_FILLS_DARK = ['rgba(196,56,66,0.10)', 'rgba(203,77,87,0.17)', 'rgba(210,98,108,0.26)', 'rgba(217,119,129,0.36)'];
+const KDE_LINES_DARK = ['#A34049', '#BB5760', '#D37179', '#EC959C']; /* outer -> inner */
+let INK, INK2, GRID, FRAME, CANVAS_BG, ANG_COL, CLOUD_FILL, HALO, CROSS_COL, LEGBOX, LEGBORDER;
+let THEME = 'light', USER_THEME = 'auto';
+let KDE_LINES_THEMED = [];
+let HOST_STAMP = document.documentElement.getAttribute('data-theme');
+const tcCache = new Map();
+
+function hexLift(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+  let h = 0, s = 0, l = (mx + mn) / 2;
+  const d = mx - mn;
+  if (d > 0) {
+    s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+    if (mx === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (mx === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+  }
+  if (l >= 0.45) return hex;
+  l = 0.45 + (0.45 - l) * 0.38;
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+  const f = t => { t = ((t % 1) + 1) % 1; if (t < 1 / 6) return p + (q - p) * 6 * t; if (t < 1 / 2) return q; if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6; return p; };
+  const to = v => Math.round(f(v) * 255).toString(16).padStart(2, '0');
+  return '#' + to(h + 1 / 3) + to(h) + to(h - 1 / 3);
+}
+function TC(c) {
+  if (THEME !== 'dark' || !c) return c;
+  let v = tcCache.get(c);
+  if (v === undefined) { v = hexLift(c); tcCache.set(c, v); }
+  return v;
+}
+function effectiveTheme() {
+  if (USER_THEME !== 'auto') return USER_THEME;
+  const stamp = document.documentElement.getAttribute('data-theme');
+  if (stamp === 'dark' || stamp === 'light') return stamp;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function applyTheme() {
+  THEME = effectiveTheme();
+  const want = USER_THEME === 'auto' ? HOST_STAMP : USER_THEME;
+  const cur = document.documentElement.getAttribute('data-theme');
+  if (want == null) { if (cur != null) document.documentElement.removeAttribute('data-theme'); }
+  else if (cur !== want) document.documentElement.setAttribute('data-theme', want);
+  const P = CANVAS_THEMES[THEME];
+  INK = P.ink; INK2 = P.ink2; GRID = P.grid; FRAME = P.frame; CANVAS_BG = P.bg;
+  ANG_COL = P.ang; CLOUD_FILL = P.cloud; HALO = P.halo; CROSS_COL = P.cross;
+  LEGBOX = P.legBox; LEGBORDER = P.legBorder;
+  HSERIES[0].color = HSERIES[1].color = P.histDesi;
+  HSERIES[0].fill = P.histDesiFill;
+  HSERIES[2].color = HSERIES[3].color = P.histLit;
+  KDE_LINES_THEMED = DATA.kde.lines.map((lev, i) => (THEME === 'dark' ? (KDE_LINES_DARK[i] || lev.color) : lev.color));
+  tcCache.clear();
+  const btn = document.getElementById('btn-theme');
+  if (btn) btn.textContent = 'theme: ' + (USER_THEME === 'auto' ? 'auto' : USER_THEME);
+  if (legendBuilt) buildLegend();
+  requestRender();
+}
+let legendBuilt = false;
 
 function render(c, LY, opt) {
+  if (!L && !(opt && opt.layout)) return;
   const dpr = opt.dpr || 1, exportMode = !!opt.exportMode;
   const Lsave = L; if (opt.layout) L = opt.layout;
   c.setTransform(dpr, 0, 0, dpr, 0, 0);
   c.clearRect(0, 0, L.W, L.H);
-  c.fillStyle = '#ffffff'; c.fillRect(0, 0, L.W, L.H);
+  c.fillStyle = CANVAS_BG; c.fillRect(0, 0, L.W, L.H);
 
   drawHist(c);
   drawLookbackAxis(c);
@@ -628,7 +772,7 @@ function drawHistLegends(c) {
     const h = box.items.length * 17 + 10;
     const bx = box.anchor === 'left' ? x0 + 8 : x1 - wMax - 8;
     const by = L.histTop + 4;
-    c.fillStyle = 'rgba(255,255,255,0.88)'; c.strokeStyle = '#b9b9b9'; c.lineWidth = 1;
+    c.fillStyle = LEGBOX; c.strokeStyle = LEGBORDER; c.lineWidth = 1;
     c.beginPath(); c.rect(bx + .5, by + .5, wMax, h); c.fill(); c.stroke();
     box.items.forEach((it, i) => {
       const iy = by + 13 + i * 17;
@@ -686,7 +830,7 @@ function drawMain(c, exportMode) {
   if (S.layers.ang) {
     c.globalAlpha = (S.hoverKey ? 0.25 : 0.7);
     for (const a of DATA.meta.ang_curves) {
-      c.strokeStyle = '#5A5A5A'; c.lineWidth = 1;
+      c.strokeStyle = ANG_COL; c.lineWidth = 1;
       c.beginPath();
       let started = false;
       for (let i = 0; i < CZ.length; i++) {
@@ -701,7 +845,7 @@ function drawMain(c, exportMode) {
       const zl = Math.pow(10, S.lx1 - 0.055 * (S.lx1 - S.lx0));
       const ly = log10(a * kpcAsOfZ(zl));
       if (ly > S.ly0 && ly < S.ly1) {
-        c.fillStyle = '#111'; c.font = '12.5px ' + F_SERIF; c.textAlign = 'center'; c.textBaseline = 'bottom';
+        c.fillStyle = INK; c.font = '12.5px ' + F_SERIF; c.textAlign = 'center'; c.textBaseline = 'bottom';
         c.globalAlpha = S.hoverKey ? 0.35 : 1;
         c.fillText(a.toFixed(1) + '″', xPix(log10(zl)), yPix(ly) - 3);
         c.globalAlpha = S.hoverKey ? 0.25 : 0.7;
@@ -713,7 +857,7 @@ function drawMain(c, exportMode) {
   // KDE fills
   const dzDim = desiDim();
   if (S.layers.kdeFill) {
-    for (const band of DATA.kde.fills) {
+    DATA.kde.fills.forEach((band, bi) => {
       const path = new Path2D();
       for (const poly of band.polys) {
         poly.forEach((p, i) => {
@@ -722,14 +866,16 @@ function drawMain(c, exportMode) {
         });
         path.closePath();
       }
-      c.save(); c.globalAlpha = dzDim; c.fillStyle = band.color; c.fill(path, 'evenodd'); c.restore();
-    }
+      c.save(); c.globalAlpha = dzDim;
+      c.fillStyle = THEME === 'dark' ? (KDE_FILLS_DARK[bi] || band.color) : band.color;
+      c.fill(path, 'evenodd'); c.restore();
+    });
   }
 
   // DESI individual pairs
   if (S.layers.cloud) {
     c.save(); c.globalAlpha = 0.5 * dzDim;
-    c.fillStyle = 'rgba(143,29,40,0.55)';
+    c.fillStyle = CLOUD_FILL;
     const rr = 1.6;
     for (let i = 0; i < DX.length; i++) {
       if (DX[i] < S.lx0 || DX[i] > S.lx1 || DY[i] < S.ly0 || DY[i] > S.ly1) continue;
@@ -745,8 +891,8 @@ function drawMain(c, exportMode) {
     if (a <= 0.001) continue;
     const r = markerRadius(s) * (S.hoverKey === s.key ? 1.15 : 1);
     const opt = {
-      stroke: s.fill ? (s.edge || s.color) : s.color,
-      fill: s.fill ? s.color : null, filled: !!s.fill,
+      stroke: TC(s.fill ? (s.edge || s.color) : s.color),
+      fill: s.fill ? TC(s.color) : null, filled: !!s.fill,
       lw: s.lw || 1.3, alpha: a,
     };
     for (let i = 0; i < s.px.length; i++) {
@@ -757,9 +903,9 @@ function drawMain(c, exportMode) {
 
   // KDE contour lines
   if (S.layers.kdeLines) {
-    for (const lev of DATA.kde.lines) {
+    DATA.kde.lines.forEach((lev, li) => {
       c.save(); c.globalAlpha = dzDim;
-      c.strokeStyle = lev.color; c.lineWidth = lev.width;
+      c.strokeStyle = KDE_LINES_THEMED[li] || lev.color; c.lineWidth = lev.width;
       c.setLineDash(dashFor(lev.style, lev.width));
       for (const poly of lev.polys) {
         c.beginPath();
@@ -770,13 +916,13 @@ function drawMain(c, exportMode) {
         c.stroke();
       }
       c.restore();
-    }
+    });
   }
 
   // crosshair
   if (S.crosshair && !exportMode) {
     const { px, py } = S.crosshair;
-    c.strokeStyle = 'rgba(40,40,40,0.35)'; c.lineWidth = 1; c.setLineDash([2, 3]);
+    c.strokeStyle = CROSS_COL; c.lineWidth = 1; c.setLineDash([2, 3]);
     c.beginPath(); c.moveTo(px, y0); c.lineTo(px, y1); c.moveTo(x0, py); c.lineTo(x1, py); c.stroke();
     c.setLineDash([]);
   }
@@ -786,7 +932,7 @@ function drawMain(c, exportMode) {
     if (!sel) continue;
     const { px, py } = pointPix(sel);
     c.beginPath(); c.arc(px, py, 9, 0, 6.2832);
-    c.strokeStyle = 'rgba(255,255,255,0.9)'; c.lineWidth = 3.4; c.stroke();
+    c.strokeStyle = HALO; c.lineWidth = 3.4; c.stroke();
     c.beginPath(); c.arc(px, py, 9, 0, 6.2832);
     c.strokeStyle = sel === S.pinned ? '#0a53c9' : '#111'; c.lineWidth = 1.6; c.stroke();
   }
@@ -832,7 +978,7 @@ function drawExportLegend(c) {
   const colW1 = w1 + 34, colW2 = w2 + 34;
   const wBox = colW1 + colW2 + 14, hBox = colN * 17 + 12;
   const bx = L.mL + L.plotW - wBox - 10, by = L.mainBot - hBox - 10;
-  c.fillStyle = 'rgba(255,255,255,0.93)'; c.strokeStyle = '#9a9a9a'; c.lineWidth = 1;
+  c.fillStyle = LEGBOX; c.strokeStyle = LEGBORDER; c.lineWidth = 1;
   c.beginPath(); c.rect(bx, by, wBox, hBox); c.fill(); c.stroke();
   items.forEach((it, i) => {
     const col = i < colN ? 0 : 1;
@@ -845,8 +991,8 @@ function drawExportLegend(c) {
     } else {
       const s = it.s;
       drawMarker(c, s.marker, ix + 10, iy, Math.min(6, markerRadius(s)), {
-        stroke: s.fill ? (s.edge || s.color) : s.color,
-        fill: s.fill ? s.color : null, filled: !!s.fill, lw: 1.3, alpha: 1,
+        stroke: TC(s.fill ? (s.edge || s.color) : s.color),
+        fill: s.fill ? TC(s.color) : null, filled: !!s.fill, lw: 1.3, alpha: 1,
       });
     }
     c.fillStyle = INK; c.font = '12px ' + F_SERIF; c.textAlign = 'left'; c.textBaseline = 'middle';
@@ -940,7 +1086,7 @@ function buildTooltip(sel, pinnedMode) {
     const sw = el('span', 'tt-swatch');
     const g = document.createElement('canvas'); g.width = g.height = 36; g.style.width = g.style.height = '18px';
     const gc = g.getContext('2d'); gc.scale(2, 2);
-    drawMarker(gc, s.marker, 9, 9, 5.5, { stroke: s.fill ? (s.edge || s.color) : s.color, fill: s.fill ? s.color : null, filled: !!s.fill, lw: 1.5, alpha: 1 });
+    drawMarker(gc, s.marker, 9, 9, 5.5, { stroke: TC(s.fill ? (s.edge || s.color) : s.color), fill: s.fill ? TC(s.color) : null, filled: !!s.fill, lw: 1.5, alpha: 1 });
     sw.appendChild(g);
     head.appendChild(sw);
     head.appendChild(el('span', 'tt-survey', s.label));
@@ -1222,13 +1368,14 @@ function glyphCanvas(s) {
   g.width = g.height = d * dpr; g.style.width = g.style.height = d + 'px';
   const gc = g.getContext('2d'); gc.scale(dpr, dpr);
   drawMarker(gc, s.marker, d / 2, d / 2, Math.min(6.5, markerRadius(s)), {
-    stroke: s.fill ? (s.edge || s.color) : s.color,
-    fill: s.fill ? s.color : null, filled: !!s.fill,
+    stroke: TC(s.fill ? (s.edge || s.color) : s.color),
+    fill: s.fill ? TC(s.color) : null, filled: !!s.fill,
     lw: 1.5, alpha: s.alpha != null ? s.alpha : 1,
   });
   return g;
 }
 function buildLegend() {
+  legendBuilt = true;
   legendList.textContent = '';
   for (const s of DATA.surveys) {
     const rowEl = el('button', 'lg-row');
@@ -1451,6 +1598,22 @@ function fillAbout() {
   $('#ab-litall').textContent = m.n_lit_all.toLocaleString();
   $('#desi-n').textContent = m.n_desi.toLocaleString();
 }
+$('#btn-theme').addEventListener('click', () => {
+  USER_THEME = USER_THEME === 'auto' ? 'dark' : USER_THEME === 'dark' ? 'light' : 'auto';
+  applyTheme();
+});
+if (window.matchMedia) {
+  try {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (USER_THEME === 'auto') applyTheme(); });
+  } catch (e) { /* older engines */ }
+}
+new MutationObserver(() => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  if (USER_THEME === 'auto') { HOST_STAMP = cur; applyTheme(); }
+  else if (cur !== USER_THEME) applyTheme();
+}).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+applyTheme();
 buildLegend();
 syncLayerChips();
 fillAbout();
