@@ -47,6 +47,12 @@ h1 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin: 0; le
 .btn:active { transform: translateY(0.5px); }
 .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .btn:focus-visible, .chip:focus-visible, .lg-row:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+a.btn-paper {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  font-weight: 650; font-size: 13px; padding: 6px 14px; text-decoration: none;
+  display: inline-flex; align-items: center;
+}
+a.btn-paper:hover { background: #7a1822; border-color: #7a1822; }
 
 .controls {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -191,6 +197,7 @@ kbd {
     <h1>DESI DR1 Dual AGN — Redshift vs. Projected Separation</h1>
     <span class="subtitle">interactive companion to the paper figure (dr_z.ipynb)</span>
     <span class="top-spacer"></span>
+    <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper&ensp;·&ensp;arXiv:2607.27390</a>
     <button class="btn" id="btn-about" type="button">About &amp; keys</button>
     <button class="btn" id="btn-table" type="button" aria-pressed="false">Data table</button>
     <button class="btn" id="btn-csv" type="button">CSV of view</button>
@@ -245,7 +252,7 @@ kbd {
   </div>
 
   <footer class="src">
-    Data: DESI DR1 dual-AGN candidates (this work; KDE of N shown in About) · BigMAC compilation (Pfeifle et&nbsp;al.&nbsp;2025)
+    Data: DESI DR1 dual-AGN candidates (this work — <a href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">arXiv:2607.27390</a>; KDE of N shown in About) · BigMAC compilation (Pfeifle et&nbsp;al.&nbsp;2025)
     with the notebook’s Sep/PSM cleaning · COSMOS-Web (Li+2025) · HST (Chen+2022) · Euclid (Mezcua+2026).
     Cosmology: Planck18. Curves show fixed angular separations of 0.5″, 1.0″ and 1.6″ (the DESI fiber-pair limit).
     Generated from <code>dr_z.ipynb</code>.
@@ -261,6 +268,8 @@ kbd {
     <p>Literature comparison: <span class="num" id="ab-lit"></span> spatially resolved dual AGN after the notebook’s
       BigMAC cleaning (z valid, ST1 &gt; −1, double-peaked/fiber-only Sep=2″–3″ entries removed), and
       <span class="num" id="ab-litall"></span> candidates before that exclusion (dashed histogram).</p>
+    <p>Full details of the sample and its selection are in the paper:
+      <a href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer"><b>arXiv:2607.27390</b></a>.</p>
     <p>Hover any marker for its catalog entry; click to pin and open ADS, the Legacy Survey viewer, or DESI spectra.
       The histogram legends are clickable, and dragging on the histogram zooms into a redshift range.</p>
     <p class="kbd-row"><kbd>wheel</kbd> zoom · <kbd>⇧wheel</kbd> z-only · <kbd>⌥wheel</kbd> r<sub>p</sub>-only ·
@@ -924,6 +933,7 @@ function buildTooltip(sel, pinnedMode) {
       links.appendChild(linkBtn('Legacy viewer', viewerUrl(p.ra, p.dec, 15)));
       links.appendChild(linkBtn('Spectrum 1', 'https://www.legacysurvey.org/viewer-desi/desi-spectrum/daily/targetid' + p.t1));
       links.appendChild(linkBtn('Spectrum 2', 'https://www.legacysurvey.org/viewer-desi/desi-spectrum/daily/targetid' + p.t2));
+      links.appendChild(linkBtn('Paper (arXiv)', 'https://arxiv.org/abs/2607.27390'));
     }
   } else {
     const s = SURVEY_BY_KEY[sel.key], p = s.points[sel.i];
@@ -1405,14 +1415,32 @@ $('#btn-png').addEventListener('click', () => {
   render(oc, null, { dpr: scale, layout: eL, exportMode: true });
   off.toBlob(b => download(b, 'dr_z_interactive.png'), 'image/png');
 });
+let dlNS = null; /* `downloads` capability namespace (artifact viewer only) */
 function download(blob, name) {
+  if (IS_ARTIFACT) {
+    if (!dlNS) return;
+    dlNS.save({ filename: name, data: blob }).catch(err => {
+      /* csv is an extended type on some views — fall back to .txt; a decline is final */
+      if (err && err.code === 'extension_not_enabled' && /\.csv$/.test(name)) {
+        dlNS.save({ filename: name.replace(/\.csv$/, '.txt'), data: blob }).catch(() => {});
+      }
+    });
+    return;
+  }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = name;
   document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 400);
 }
-if (IS_ARTIFACT) { $('#btn-png').style.display = 'none'; $('#btn-csv').style.display = 'none'; }
+if (IS_ARTIFACT) {
+  $('#btn-png').style.display = 'none'; $('#btn-csv').style.display = 'none';
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('downloads').then(ns => {
+      if (ns) { dlNS = ns; $('#btn-png').style.display = ''; $('#btn-csv').style.display = ''; }
+    }).catch(() => {});
+  }
+}
 
 /* ---------------- boot ---------------- */
 function fillAbout() {
