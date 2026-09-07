@@ -272,6 +272,10 @@ kbd {
 
 .btn-paper, .btn-paper:hover { background: transparent !important; color: var(--ink) !important; border: 0 !important; border-bottom: 1px solid var(--ink) !important; border-radius: 0 !important; padding: 2px 0 !important; font-weight: 500; }
 .btn-paper:hover { color: var(--muted) !important; border-bottom-color: var(--muted) !important; }
+/* final: no boxes anywhere (these come last so they win) */
+#fig-wrap, .legend-panel, #drawer { background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+#readout, .lg-buttons { border-top: 0 !important; }
+.legend-panel { padding-left: 12px !important; }
 </style>
 <div class="page">
   <header class="top">
