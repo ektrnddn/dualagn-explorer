@@ -93,9 +93,19 @@ body {
   line-height: 1.45;
 }
 .page { max-width: 1560px; margin: 0 auto; padding: 22px 24px 30px; }
-.lg-sub, #btn-about, .subtitle { display: none !important; }
-.controls { margin: 10px 0 12px; }
-.chip { border-radius: 999px; }
+#btn-about, .subtitle, .controls { display: none !important; }
+#fig-wrap, .legend-panel { background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+#fig-wrap { padding: 0; }
+.legend-panel { padding: 6px 0 0 8px; border-left: 1px solid var(--line); }
+.lg-sub { display: flex; flex-direction: column; gap: 2px; margin: 4px 0 10px; }
+.chip { border: 0 !important; background: transparent !important; border-radius: 0; padding: 3px 4px; font-size: 12.5px; color: var(--ink); text-align: left; justify-content: flex-start; }
+.chip.off { color: var(--muted); }
+.chip.off .dot { opacity: .3; }
+.chip:hover { background: var(--row-hover) !important; }
+.axis-toggle { position: absolute; left: 12px; top: 8px; appearance: none; border: 0; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 11px; padding: 2px 4px; cursor: pointer; border-bottom: 1px dotted var(--muted); }
+.axis-toggle:hover { color: var(--ink); border-bottom-color: var(--ink); }
+#search { -webkit-appearance: none; appearance: none; width: 100%; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 4px 4px 6px; margin: 0 0 6px; background: transparent; font-family: var(--sans); font-size: 12.5px; color: var(--ink); }
+#search:focus { outline: none; border-bottom-color: var(--ink); }
 #btn-theme { border: 0; padding: 4px; border-radius: 50%; display: inline-flex; align-items: center; color: var(--ink); background: transparent; cursor: pointer; }
 #btn-theme:hover { background: var(--line); }
 #btn-theme svg { display: block; }
@@ -271,29 +281,20 @@ kbd {
     <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper</a>
     <button id="btn-theme" type="button" title="Switch between light and dark" aria-label="Switch between light and dark"></button>
     <button class="btn" id="btn-about" type="button">About &amp; keys</button>
+    <button class="btn" id="btn-reset" type="button" title="Double-click the plot also resets">Reset view</button>
     <button class="btn" id="btn-table" type="button" aria-pressed="false">Data table</button>
     <button class="btn" id="btn-csv" type="button">CSV of view</button>
     <button class="btn" id="btn-png" type="button">Export PNG</button>
   </header>
 
-  <div class="controls" role="toolbar" aria-label="Figure controls">
-    <span class="ctl-label">Layers</span>
-    <button class="chip" data-layer="kdeFill" type="button"><span class="dot fill"></span>KDE fill</button>
-    <button class="chip" data-layer="kdeLines" type="button"><span class="dot lines"></span>HDR contours</button>
-    <button class="chip" data-layer="cloud" type="button"><span class="dot cloud"></span>DESI pairs (<span id="desi-n">…</span>)</button>
-    <button class="chip" data-layer="ang" type="button"><span class="dot ang"></span>0.5″/1″/1.6″ curves</button>
-    <span class="sep"></span>
-    <button class="btn" id="hist-scale" type="button" title="Toggle histogram y-scale">log N</button>
-    <span class="sep"></span>
-    <button class="btn" id="btn-reset" type="button" title="Double-click the plot also resets">Reset view</button>
+  <div class="controls" aria-hidden="true">
     <button class="btn" id="btn-fit" type="button">Fit data</button>
-    <span class="top-spacer"></span>
-    <input id="search" type="search" placeholder="Filter surveys… (e.g. Inada)" aria-label="Filter surveys" />
   </div>
 
   <div class="layout">
     <div id="fig-wrap">
       <canvas id="fig" aria-label="Redshift versus projected separation figure. Use the data table for a text alternative."></canvas>
+      <button class="axis-toggle" id="hist-scale" type="button" title="Switch the histogram between log and linear counts">log N</button>
       <div id="readout"></div>
       <div id="tooltip" role="status"></div>
     </div>
@@ -306,11 +307,13 @@ kbd {
         <span class="lg-count" id="desi-count"></span>
       </div>
       <div class="lg-sub">
-        <button class="chip small" data-layer="kdeFill" type="button">fill</button>
-        <button class="chip small" data-layer="kdeLines" type="button">50/80/95/99%</button>
-        <button class="chip small" data-layer="cloud" type="button">pairs</button>
+        <button class="chip small" data-layer="kdeFill" type="button"><span class="dot fill"></span>KDE fill</button>
+        <button class="chip small" data-layer="kdeLines" type="button"><span class="dot lines"></span>HDR contours</button>
+        <button class="chip small" data-layer="cloud" type="button"><span class="dot cloud"></span>DESI pairs (<span id="desi-n">…</span>)</button>
+        <button class="chip small" data-layer="ang" type="button"><span class="dot ang"></span>0.5″/1″/1.6″ curves</button>
       </div>
       <div class="lg-section">Literature</div>
+      <input id="search" type="search" placeholder="Filter surveys…" aria-label="Filter surveys" />
       <div id="legend-list"></div>
       <div class="lg-buttons">
         <button class="btn" id="btn-all" type="button">All on</button>
