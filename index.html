@@ -270,8 +270,9 @@ kbd {
   #fig-wrap { min-width: 0; }
 }
 
-.btn-paper, .btn-paper:hover { background: transparent !important; color: var(--ink) !important; border: 0 !important; border-bottom: 1px solid var(--ink) !important; border-radius: 0 !important; padding: 2px 0 !important; font-weight: 500; }
-.btn-paper:hover { color: var(--muted) !important; border-bottom-color: var(--muted) !important; }
+a.btn-paper, a.btn-paper:hover { background: #8F1D28 !important; color: #ffffff !important; border: 0 !important; border-radius: 6px !important; padding: 7px 14px !important; font-weight: 500; margin-left: 10px; }
+a.btn-paper:hover { background: #7a1822 !important; }
+header.top { gap: 18px; }
 /* final: no boxes anywhere (these come last so they win) */
 #fig-wrap, .legend-panel, #drawer { background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
 #readout, .lg-buttons { border-top: 0 !important; }
@@ -280,15 +281,14 @@ kbd {
 <div class="page">
   <header class="top">
     <h1>DESI DR1 dual AGN: redshift and projected separation</h1>
-    <span class="subtitle">interactive companion to the paper figure (dr_z.ipynb)</span>
     <span class="top-spacer"></span>
-    <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper</a>
-    <button id="btn-theme" type="button" title="Switch between light and dark" aria-label="Switch between light and dark"></button>
-    <button class="btn" id="btn-about" type="button">About &amp; keys</button>
     <button class="btn" id="btn-reset" type="button" title="Double-click the plot also resets">Reset view</button>
     <button class="btn" id="btn-table" type="button" aria-pressed="false">Data table</button>
     <button class="btn" id="btn-csv" type="button">CSV of view</button>
     <button class="btn" id="btn-png" type="button">Export PNG</button>
+    <button class="btn" id="btn-about" type="button">About &amp; keys</button>
+    <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper</a>
+    <button id="btn-theme" type="button" title="Switch between light and dark" aria-label="Switch between light and dark"></button>
   </header>
 
   <div class="controls" aria-hidden="true">
