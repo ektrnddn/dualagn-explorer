@@ -3,17 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DESI DR1 Dual AGN — interactive z–separation figure</title>
+<title>DESI DR1 dual AGN — redshift and projected separation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 <style>
 :root {
-  --bg: #f2f1ed;
+  --bg: #ffffff;
   --card: #ffffff;
-  --ink: #1a1a1a;
-  --ink2: #555;
-  --muted: #8a8886;
-  --line: #dcdad5;
+  --ink: #191919;
+  --ink2: #444444;
+  --muted: #737373;
+  --line: #ececec;
   --accent: #8F1D28;
   --accent-soft: rgba(196, 56, 66, 0.08);
   --blue: #0a53c9;
@@ -29,9 +31,9 @@
   --kbd-bg: #f4f3f0;
   --ang-chip: #5A5A5A;
   --shadow: 0 1px 2px rgba(30, 25, 20, 0.05);
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --serif: Georgia, "Times New Roman", serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Geist Mono', Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -90,16 +92,20 @@ body {
   font-size: 14px;
   line-height: 1.45;
 }
-.page { max-width: 1560px; margin: 0 auto; padding: 18px 20px 30px; }
+.page { max-width: 1560px; margin: 0 auto; padding: 22px 24px 30px; }
+.gone, .controls, .lg-sub, .lg-buttons, #btn-about, #btn-csv, #btn-png, .subtitle { display: none !important; }
+#btn-theme { border: 0; padding: 4px; border-radius: 50%; display: inline-flex; align-items: center; color: var(--ink); background: transparent; cursor: pointer; }
+#btn-theme:hover { background: var(--line); }
+#btn-theme svg { display: block; }
 
 header.top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
-h1 { font-family: var(--serif); font-size: 21px; font-weight: 600; margin: 0; letter-spacing: 0.1px; }
+h1 { font-family: var(--sans); font-size: 18px; font-weight: 500; margin: 0; letter-spacing: -.02em; }
 .subtitle { color: var(--ink2); font-size: 13px; }
 .top-spacer { flex: 1; }
 
 .btn {
-  appearance: none; border: 1px solid var(--line); background: var(--card); color: var(--ink);
-  border-radius: 7px; padding: 5px 11px; font-size: 12.5px; cursor: pointer; font-family: var(--sans);
+  appearance: none; border: 0; border-bottom: 1px solid var(--ink); background: transparent; color: var(--ink);
+  border-radius: 0; padding: 2px 0; font-size: 13px; cursor: pointer; font-family: var(--sans);
   transition: border-color .12s, background .12s, opacity .12s;
   white-space: nowrap;
 }
@@ -252,14 +258,16 @@ kbd {
   #fig-wrap { min-width: 0; }
 }
 
+.btn-paper, .btn-paper:hover { background: transparent !important; color: var(--ink) !important; border: 0 !important; border-bottom: 1px solid var(--ink) !important; border-radius: 0 !important; padding: 2px 0 !important; font-weight: 500; }
+.btn-paper:hover { color: var(--muted) !important; border-bottom-color: var(--muted) !important; }
 </style>
 <div class="page">
   <header class="top">
-    <h1>DESI DR1 Dual AGN — Redshift vs. Projected Separation</h1>
+    <h1>DESI DR1 dual AGN: redshift and projected separation</h1>
     <span class="subtitle">interactive companion to the paper figure (dr_z.ipynb)</span>
     <span class="top-spacer"></span>
-    <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper&ensp;·&ensp;arXiv:2607.27390</a>
-    <button class="btn" id="btn-theme" type="button" title="Cycle theme: auto → dark → light">theme: auto</button>
+    <a class="btn btn-paper" href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">Read the paper</a>
+    <button id="btn-theme" type="button" title="Switch between light and dark" aria-label="Switch between light and dark"></button>
     <button class="btn" id="btn-about" type="button">About &amp; keys</button>
     <button class="btn" id="btn-table" type="button" aria-pressed="false">Data table</button>
     <button class="btn" id="btn-csv" type="button">CSV of view</button>
@@ -300,7 +308,7 @@ kbd {
         <button class="chip small" data-layer="kdeLines" type="button">50/80/95/99%</button>
         <button class="chip small" data-layer="cloud" type="button">pairs</button>
       </div>
-      <div class="lg-section">Literature <span style="text-transform:none;letter-spacing:0">(click: toggle · dbl-click: solo · hover: isolate)</span></div>
+      <div class="lg-section">Literature</div>
       <div id="legend-list"></div>
       <div class="lg-buttons">
         <button class="btn" id="btn-all" type="button">All on</button>
@@ -314,10 +322,8 @@ kbd {
   </div>
 
   <footer class="src">
-    Data: DESI DR1 dual-AGN candidates (this work — <a href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">arXiv:2607.27390</a>; KDE of N shown in About) · BigMAC compilation (Pfeifle et&nbsp;al.&nbsp;2025)
-    with the notebook’s Sep/PSM cleaning · COSMOS-Web (Li+2025) · HST (Chen+2022) · Euclid (Mezcua+2026).
-    Cosmology: Planck18. Curves show fixed angular separations of 0.5″, 1.0″ and 1.6″ (the DESI fiber-pair limit).
-    Generated from <code>dr_z.ipynb</code>.
+    Data: DESI DR1 dual-AGN candidates (<a href="https://arxiv.org/abs/2607.27390" target="_blank" rel="noopener noreferrer">arXiv:2607.27390</a>) · BigMAC compilation (Pfeifle et&nbsp;al.&nbsp;2025) · COSMOS-Web (Li+2025) · HST (Chen+2022) · Euclid (Mezcua+2026).
+    Cosmology: Planck18. Curves mark fixed angular separations of 0.5″, 1.0″ and 1.6″, the DESI fibre-pair limit.
   </footer>
 
   <dialog id="about">
@@ -591,7 +597,7 @@ const CANVAS_THEMES = {
 const KDE_FILLS_DARK = ['rgba(196,56,66,0.10)', 'rgba(203,77,87,0.17)', 'rgba(210,98,108,0.26)', 'rgba(217,119,129,0.36)'];
 const KDE_LINES_DARK = ['#A34049', '#BB5760', '#D37179', '#EC959C']; /* outer -> inner */
 let INK, INK2, GRID, FRAME, CANVAS_BG, ANG_COL, CLOUD_FILL, HALO, CROSS_COL, LEGBOX, LEGBORDER;
-let THEME = 'light', USER_THEME = 'auto';
+let THEME = 'light', USER_THEME = 'light';
 let KDE_LINES_THEMED = [];
 let HOST_STAMP = document.documentElement.getAttribute('data-theme');
 const tcCache = new Map();
@@ -645,7 +651,7 @@ function applyTheme() {
   KDE_LINES_THEMED = DATA.kde.lines.map((lev, i) => (THEME === 'dark' ? (KDE_LINES_DARK[i] || lev.color) : lev.color));
   tcCache.clear();
   const btn = document.getElementById('btn-theme');
-  if (btn) btn.textContent = 'theme: ' + (USER_THEME === 'auto' ? 'auto' : USER_THEME);
+  if (btn) btn.innerHTML = THEME === 'dark' ? '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2.5 10.5c2-2.6 4.6-3.9 7.5-3.9s5.5 1.3 7.5 3.9"/><path d="M6 11.5l-1.2 2M10 12.4v2.3M14 11.5l1.2 2"/></svg>' : '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 10c2-3.4 4.6-5.1 7.5-5.1s5.5 1.7 7.5 5.1c-2 3.4-4.6 5.1-7.5 5.1S4.5 13.4 2.5 10z"/><circle cx="10" cy="10" r="2.4"/></svg>';
   if (legendBuilt) buildLegend();
   requestRender();
 }
@@ -1143,7 +1149,7 @@ function hideTooltip() { if (!S.pinned) tip.style.display = 'none'; }
 /* ---------------- readout ---------------- */
 const readout = $('#readout');
 function updateReadout(lx, ly) {
-  if (lx == null) { readout.textContent = 'Hover the plot — wheel zooms · drag pans · drag on histogram selects a z-range · double-click resets'; return; }
+  if (lx == null) { readout.textContent = ''; return; }
   const z = Math.pow(10, lx), sep = Math.pow(10, ly);
   const th = sep / kpcAsOfZ(z);
   readout.textContent =
@@ -1599,7 +1605,7 @@ function fillAbout() {
   $('#desi-n').textContent = m.n_desi.toLocaleString();
 }
 $('#btn-theme').addEventListener('click', () => {
-  USER_THEME = USER_THEME === 'auto' ? 'dark' : USER_THEME === 'dark' ? 'light' : 'auto';
+  USER_THEME = USER_THEME === 'dark' ? 'light' : 'dark';
   applyTheme();
 });
 if (window.matchMedia) {
