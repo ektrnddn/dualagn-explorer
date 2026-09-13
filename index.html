@@ -270,8 +270,8 @@ kbd {
   #fig-wrap { min-width: 0; }
 }
 
-a.btn-paper, a.btn-paper:hover { background: #8F1D28 !important; color: #ffffff !important; border: 0 !important; border-radius: 6px !important; padding: 7px 14px !important; font-weight: 500; margin-left: 10px; }
-a.btn-paper:hover { background: #7a1822 !important; }
+a.btn-paper, a.btn-paper:hover { background: #d98aa0 !important; color: #191919 !important; border: 0 !important; border-radius: 6px !important; padding: 7px 14px !important; font-weight: 500; margin-left: 10px; }
+a.btn-paper:hover { opacity: .85; }
 header.top { gap: 18px; }
 /* final: no boxes anywhere (these come last so they win) */
 #fig-wrap, .legend-panel, #drawer { background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
@@ -582,7 +582,7 @@ function desiDim() { return (S.hoverKey && S.hoverKey !== 'desi') ? 0.13 : (S.se
 let renderQueued = false;
 function requestRender() { if (!renderQueued) { renderQueued = true; requestAnimationFrame(() => { renderQueued = false; render(ctx, L, { dpr: window.devicePixelRatio || 1 }); }); } }
 
-const F_SERIF = 'Georgia, "Times New Roman", serif';
+const F_SERIF = "'Geist', 'Helvetica Neue', Arial, sans-serif";
 
 /* ---------------- themes ----------------
  * Light is the paper's exact look. Dark re-derives the figure: same catalog hues,
